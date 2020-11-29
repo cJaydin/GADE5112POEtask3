@@ -2,17 +2,19 @@
 {
     public abstract class Weapon : Item
     {
+        public enum WeaponTypeEnum { Melee,Ranged };
+
         protected int damage;
         protected int range;
         protected int durability;
         protected int cost;
-        protected int weaponType; // NB: Change type to enum
+        protected WeaponTypeEnum weaponType;
 
         public int Damage { get => damage; set => damage = value; }
-        public int Range { get => range; set => range = value; }
+        virtual public int Range { get => range; set => range = value; }
         public int Durability { get => durability; set => durability = value; }
         public int Cost { get => cost; set => cost = value; }
-        public int WeaponType { get => weaponType; set => weaponType = value; } // NB: Replace with enum
+        public WeaponTypeEnum WeaponType { get => weaponType; set => weaponType = value; } // NB: Replace with enum
 
         public Weapon(int x, int y, char symbol, int arrayIndex) : base(x, y, symbol, arrayIndex) { }
     }
