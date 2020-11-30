@@ -94,6 +94,9 @@ namespace GADE5112POE
                 {
                     purse += item.Quantity;
                     Program.MainForm.Output(GetType().Name + " has looted " + item.Quantity + " gold from " + target.GetType().Name);
+                    Program.MainForm.ButtonWeapon1.Enabled = Program.Game.GameShop.CanBuy(0);
+                    Program.MainForm.ButtonWeapon2.Enabled = Program.Game.GameShop.CanBuy(1);
+                    Program.MainForm.ButtonWeapon3.Enabled = Program.Game.GameShop.CanBuy(2);
                 }
                 else if (Weapon == null && item.GetType().BaseType == typeof(Weapon))
                 {

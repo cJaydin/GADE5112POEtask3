@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GADE5112POE
 {
     class Gold : Item
     {
+        private Random random = new Random();
+
         protected int goldDrop;
 
         protected int GoldDrop { get => goldDrop; set => goldDrop = value; }
@@ -19,8 +17,7 @@ namespace GADE5112POE
 
         public Gold(int x, int y, int quanity, int arrayIndex) : base(x, y, '$', arrayIndex)
         {
-            Random r = new Random();
-            goldDrop = r.Next(1, 6);
+            goldDrop = random.Next(1, 6);
             Quantity = goldDrop;
         }
     }

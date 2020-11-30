@@ -10,9 +10,9 @@ namespace GADE5112POE
         {
             if (move==Movement.Idle) { return move; }
 
-            Type visionType = Vision[(int)move].GetType();
+            Tile visionTile = Vision[(int)move];
 
-            if (visionType==typeof(EmptyTile) || visionType.BaseType==typeof(Item) || visionType.BaseType==typeof(Weapon))
+            if (visionTile is EmptyTile || visionTile is Item)
             {
                 return move;
             } else
@@ -28,6 +28,9 @@ namespace GADE5112POE
                 Purse += item.Quantity;
                 Program.MainForm.Output("Hero picked up " + item.Quantity + " gold");
                 Program.MainForm.Controls.Remove(item.Button);
+                Program.MainForm.ButtonWeapon1.Enabled = Program.Game.GameShop.CanBuy(0);
+                Program.MainForm.ButtonWeapon2.Enabled = Program.Game.GameShop.CanBuy(1);
+                Program.MainForm.ButtonWeapon3.Enabled = Program.Game.GameShop.CanBuy(2);
             } else if (item.GetType().BaseType==typeof(Weapon))
             {
                 weapon = (Weapon)item;
@@ -35,6 +38,7 @@ namespace GADE5112POE
             }
         }
 
+        // Newlines in string does not work well with frmMain.Output()
         public override string ToString()
         {
             //return "Player Stats: " + Environment.NewLine + "HP: " + Hp + "/" + MaxHp + Environment.NewLine + "Damage: " + Damage + Environment.NewLine + "[" + X + "," + Y + "]";

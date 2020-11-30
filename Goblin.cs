@@ -9,8 +9,6 @@ namespace GADE5112POE
             purse = 1;
         }
 
-        private Random random = new Random();
-
         public Movement GetRandomMovement()
         {
             int i = random.Next(1, 5);
@@ -43,6 +41,7 @@ namespace GADE5112POE
                 Purse += item.Quantity;
                 Program.MainForm.Output("Goblin picked up " + item.Quantity + " gold, it now has: " + purse);
                 Program.MainForm.Controls.Remove(item.Button);
+
             }
             else if (item.GetType().BaseType == typeof(Weapon))
             {

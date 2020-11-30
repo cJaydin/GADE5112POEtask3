@@ -191,8 +191,13 @@ namespace GADE5112POE
             MapCreate.ArrEnemy = enemies;
         }
 
-        public bool MovePlayer(Character.Movement move)
+        public bool MovePlayer(Character.Movement direction)
         {
+            Character.Movement movement = Program.Game.MapCreate.Hero.ReturnMove(direction);
+            MapCreate.Hero.Move(movement);
+            MoveEnemies();
+            EnemiesAttack();
+
             //int x = MapCreate.Hero.X;
             //int y = MapCreate.Hero.Y;
             //MapCreate.ArrMap[x, y] = new EmptyTile(x, y);
@@ -336,6 +341,16 @@ namespace GADE5112POE
                 if (enemy.CheckRange(MapCreate.Hero))
                 {
                     enemy.Attack(MapCreate.Hero);
+                }
+
+                foreach (Enemy enemyTarget in MapCreate.ArrEnemy)
+                {
+                    if (enemy==enemyTarget) { continue; }
+
+                    if (enemy.CheckRange(enemyTarget))
+                    {
+                        enemy.Attack(enemyTarget);
+                    }
                 }
             }
 

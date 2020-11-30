@@ -4,7 +4,7 @@ namespace GADE5112POE
 {
     public abstract class Enemy : Character
     {
-        protected Random r = new Random();
+        protected Random random = new Random();
         public int ArrayIndex { get; internal set; }
 
         public Enemy(int hp, int damage, int x, int y, char symbol, int arrayIndex) : base(hp, damage, hp, x, y, symbol)

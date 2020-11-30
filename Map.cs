@@ -11,7 +11,8 @@ namespace GADE5112POE
         private Leader leader;
         private int mapHeight;
         private int mapWidth;
-        private Random r = new Random();
+
+        private Random random = new Random();
 
         public int MapHeight { get => mapHeight; set => mapHeight = value; }
         public int MapWidth { get => mapWidth; set => mapWidth = value; }
@@ -32,10 +33,8 @@ namespace GADE5112POE
 
         public Map(int minWidth, int maxWidth, int minHeight, int maxHeight, int enemyCount, int itemCount)
         {
-            Random random = new Random();
-
-            MapHeight = r.Next(minHeight, maxHeight);
-            MapWidth = r.Next(minWidth, maxWidth);
+            MapHeight = random.Next(minHeight, maxHeight);
+            MapWidth = random.Next(minWidth, maxWidth);
 
             ArrMap = new Tile[MapWidth, MapHeight];
             ArrEnemy = new Enemy[enemyCount];
@@ -124,7 +123,6 @@ namespace GADE5112POE
 
         private Weapon CreateWeapon(int x, int y, int arrayIndex)
         {
-            Random random = new Random();
             int weaponType = random.Next(0, 2);
 
             if (weaponType == (int)Weapon.WeaponTypeEnum.Melee)
@@ -156,8 +154,6 @@ namespace GADE5112POE
 
         public Tile Create(Tile.TileType type, int arrayIndex)
         {
-            Random random = new Random();
-
             int x = 0, y = 0;
             do
             {

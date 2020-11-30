@@ -262,29 +262,17 @@ namespace GADE5112POE
 
         private void btnRight_Click(object sender, System.EventArgs e)
         {
-            Character.Movement movement = Program.Game.MapCreate.Hero.ReturnMove(Character.Movement.Right);
-            Program.Game.MapCreate.Hero.Move(movement);
-            Program.Game.MoveEnemies();
-            Program.Game.EnemiesAttack();
-            //Program.Game.MovePlayer(Character.Movement.Right);
+            Program.Game.MovePlayer(Character.Movement.Right);
         }
 
         private void btnDown_Click(object sender, System.EventArgs e)
         {
-            Character.Movement movement = Program.Game.MapCreate.Hero.ReturnMove(Character.Movement.Down);
-            Program.Game.MapCreate.Hero.Move(movement);
-            Program.Game.MoveEnemies();
-            Program.Game.EnemiesAttack();
-            //Program.Game.MovePlayer(Character.Movement.up);
+            Program.Game.MovePlayer(Character.Movement.Down);
         }
 
         private void btnLeft_Click(object sender, System.EventArgs e)
         {
-            Character.Movement movement = Program.Game.MapCreate.Hero.ReturnMove(Character.Movement.Left);
-            Program.Game.MapCreate.Hero.Move(movement);
-            Program.Game.MoveEnemies();
-            Program.Game.EnemiesAttack();
-            //Program.Game.MovePlayer(Character.Movement.Left);
+            Program.Game.MovePlayer(Character.Movement.Left);
         }
 
         private void btnShowHeroStats_Click(object sender, EventArgs e)
