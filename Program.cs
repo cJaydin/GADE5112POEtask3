@@ -15,5 +15,9 @@ namespace GADE5112POE
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
         }
+
+        public static bool ShowCoordinates { get; set; }
+        public static frmMain MainForm { get; set; }
+        public static GameEngine Game { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace GADE5112POE
 {
     public abstract class Tile
     {
-        public enum TileType { Hero, Enemy, Gold, Weapon }
+        public enum TileType { Hero, Enemy, Gold, Weapon, Leader }
 
         protected int x;
         protected int y;

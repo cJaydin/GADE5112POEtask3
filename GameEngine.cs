@@ -8,18 +8,21 @@ namespace GADE5112POE
     class GameEngine
     {
         private Map map;
-        private frmMain mainForm;
+        private Shop shop;
 
         public Map MapCreate { get => map; set => map = value; }
-        public frmMain MainForm { get => mainForm; set => mainForm = value; }
+        public Shop GameShop { get => shop; set => shop = value; }
 
         // Constructor when loading new game
         public GameEngine() { }
 
-        public GameEngine(frmMain form, int minWidth, int maxWidth, int minHeight, int maxHeight, int enemyCount, int itemCount)
+        public GameEngine(int minWidth, int maxWidth, int minHeight, int maxHeight, int enemyCount, int itemCount)
         {
-            mainForm = form;
             MapCreate = new Map(minWidth, maxWidth, minHeight, maxHeight, enemyCount, itemCount);
+            shop = new Shop(MapCreate.Hero);
+            Program.MainForm.ButtonWeapon1.Enabled = GameShop.CanBuy(0);
+            Program.MainForm.ButtonWeapon2.Enabled = GameShop.CanBuy(1);
+            Program.MainForm.ButtonWeapon3.Enabled = GameShop.CanBuy(2);
         }
 
         public bool Save()
@@ -94,14 +97,14 @@ namespace GADE5112POE
                 int mapWidth = br.ReadInt32();
                 int mapHeight = br.ReadInt32();
 
-                Map m = new Map(mapWidth,mapHeight);
+                Map m = new Map(mapWidth, mapHeight);
 
                 List<Enemy> lstEnemy = new List<Enemy>();
                 List<Item> lstItem = new List<Item>();
- 
-                for (int i=0; i < mapWidth; i++)
+
+                for (int i = 0; i < mapWidth; i++)
                 {
-                    for (int j=0; j < mapHeight; j++)
+                    for (int j = 0; j < mapHeight; j++)
                     {
                         string tileType = br.ReadString();
                         int x = br.ReadInt32();
@@ -174,7 +177,7 @@ namespace GADE5112POE
             return true;
         }
 
-        private void DeleteEnemyFromEnemyArray(Enemy enemy)
+        public void DeleteEnemyFromEnemyArray(Enemy enemy)
         {
             Enemy[] enemies = new Enemy[MapCreate.ArrEnemy.Length - 1];
             int i = 0;
@@ -188,158 +191,157 @@ namespace GADE5112POE
             MapCreate.ArrEnemy = enemies;
         }
 
-
-
         public bool MovePlayer(Character.Movement move)
         {
-            int x = MapCreate.Hero.X;
-            int y = MapCreate.Hero.Y;
-            MapCreate.ArrMap[x, y] = new EmptyTile(x, y);
+            //int x = MapCreate.Hero.X;
+            //int y = MapCreate.Hero.Y;
+            //MapCreate.ArrMap[x, y] = new EmptyTile(x, y);
 
-            move = MapCreate.Hero.ReturnMove(move);
+            //move = MapCreate.Hero.ReturnMove(move);
 
-            switch (move)
-            {
-                case Character.Movement.Idle:
-                    break;
-                case Character.Movement.Up:
-                    //if (MapCreate.Hero.Vision[(int)Hero.Movement.Up].GetType() != typeof(EmptyTile)) break;
-                    if (MapCreate.ArrMap[x, y - 1].GetType().BaseType == typeof(Item))
-                    {
-                        if (MapCreate.ArrMap[x, y - 1].GetType() == typeof(Gold))
-                        {
-                            MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x, y - 1], mainForm);
-                            MapCreate.DeleteItemFromItemArray((Item)MapCreate.ArrMap[x, y - 1]);
-                        }
-                        else
-                        {
-                            ////Item item = (Item)MapCreate.ArrMap[x, y - 1];
-                            //if (DialogResult.OK == new dialoguePickupItem(item).Show())
-                            //{
-                            //    Item item = MapCreate.GetItemAtPosition(x, y - 1);
-                            //    //Hero.Weapon = item;
-                            //}
-                        }
-                    }
-                    MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20, (y - 1) * 20);
-                    MapCreate.Hero.X = x;
-                    MapCreate.Hero.Y = y - 1;
-                    MapCreate.ArrMap[x, y - 1] = MapCreate.Hero;
-                    break;
-                case Character.Movement.Down:
-                    //if (MapCreate.Hero.Vision[(int)Hero.Movement.Down].GetType() != typeof(EmptyTile)) break;
-                    if (MapCreate.ArrMap[x, y + 1].GetType().BaseType == typeof(Item))
-                    {
-                        Item item = (Item)MapCreate.ArrMap[x, y + 1];
-                        MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x, y + 1], mainForm);
-                        MapCreate.DeleteItemFromItemArray(item);
-                    }
-                    MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20, (y + 1) * 20);
-                    MapCreate.Hero.X = x;
-                    MapCreate.Hero.Y = y + 1;
-                    MapCreate.ArrMap[x, y + 1] = MapCreate.Hero;
-                    break;
-                case Character.Movement.Right:
-                    //if (MapCreate.Hero.Vision[(int)Hero.Movement.Right].GetType() != typeof(EmptyTile)) break;
-                    if (MapCreate.ArrMap[x + 1, y].GetType().BaseType == typeof(Item))
-                    {
-                        Item item = (Item)MapCreate.ArrMap[x + 1, y];
-                        MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x + 1, y], mainForm);
-                        MapCreate.DeleteItemFromItemArray(item);
-                    }
-                    MapCreate.Hero.Button.Location = new System.Drawing.Point((x + 1) * 20, y * 20);
-                    MapCreate.Hero.X = x + 1;
-                    MapCreate.Hero.Y = y;
-                    MapCreate.ArrMap[x + 1, y] = MapCreate.Hero;
-                    break;
-                case Character.Movement.Left:
-                    //if (MapCreate.Hero.Vision[(int)Hero.Movement.Left].GetType() != typeof(EmptyTile)) break;
-                    if (MapCreate.ArrMap[x - 1, y].GetType().BaseType == typeof(Item))
-                    {
-                        Item item = (Item)MapCreate.ArrMap[x - 1, y];
-                        MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x - 1, y], mainForm);
-                        MapCreate.DeleteItemFromItemArray(item);
-                    }
-                    MapCreate.Hero.Button.Location = new System.Drawing.Point((x - 1) * 20, y * 20);
-                    MapCreate.Hero.X = x - 1;
-                    MapCreate.Hero.Y = y;
-                    MapCreate.ArrMap[x - 1, y] = MapCreate.Hero;
-                    break;
-                default:
-                    break;
-            }
+            //switch (move)
+            //{
+            //    case Character.Movement.Idle:
+            //        break;
+            //    case Character.Movement.Up:
+            //        //if (MapCreate.Hero.Vision[(int)Hero.Movement.Up].GetType() != typeof(EmptyTile)) break;
+            //        if (MapCreate.ArrMap[x, y - 1].GetType().BaseType == typeof(Item))
+            //        {
+            //            if (MapCreate.ArrMap[x, y - 1] is Item)
+            //            {
+            //                MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x, y - 1]);
+            //                MapCreate.DeleteItemFromItemArray((Item)MapCreate.ArrMap[x, y - 1]);
+            //            }
+            //            else
+            //            {
+            //                ////Item item = (Item)MapCreate.ArrMap[x, y - 1];
+            //                //if (DialogResult.OK == new dialoguePickupItem(item).Show())
+            //                //{
+            //                //    Item item = MapCreate.GetItemAtPosition(x, y - 1);
+            //                //    //Hero.Weapon = item;
+            //                //}
+            //            }
+            //        }
 
-            MapCreate.UpdateVision();
-            MapCreate.MoveEnemies();
-            MapCreate.UpdateVision();
-            MageAttacks();
-            MapCreate.UpdateVision();
-            mainForm.Refresh();
+            //        if (Program.ShowCoordinates)
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20 + 40, (y - 1) * 20 + 40);
+            //        }
+            //        else
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20, (y - 1) * 20);
+            //        }
+
+            //        MapCreate.Hero.X = x;
+            //        MapCreate.Hero.Y = y - 1;
+            //        MapCreate.ArrMap[x, y - 1] = MapCreate.Hero;
+            //        break;
+            //    case Character.Movement.Down:
+            //        //if (MapCreate.Hero.Vision[(int)Hero.Movement.Down].GetType() != typeof(EmptyTile)) break;
+            //        if (MapCreate.ArrMap[x, y + 1] is Item)
+            //        {
+            //            Item item = (Item)MapCreate.ArrMap[x, y + 1];
+            //            MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x, y + 1]);
+            //            MapCreate.DeleteItemFromItemArray(item);
+            //        }
+            //        if (Program.ShowCoordinates)
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20 + 40, (y + 1) * 20 + 40);
+            //        }
+            //        else
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point(x * 20, (y + 1) * 20);
+            //        }
+            //        MapCreate.Hero.X = x;
+            //        MapCreate.Hero.Y = y + 1;
+            //        MapCreate.ArrMap[x, y + 1] = MapCreate.Hero;
+            //        break;
+            //    case Character.Movement.Right:
+            //        //if (MapCreate.Hero.Vision[(int)Hero.Movement.Right].GetType() != typeof(EmptyTile)) break;
+            //        if (MapCreate.ArrMap[x + 1, y] is Item)
+            //        {
+            //            Item item = (Item)MapCreate.ArrMap[x + 1, y];
+            //            MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x + 1, y]);
+            //            MapCreate.DeleteItemFromItemArray(item);
+            //        }
+            //        if (Program.ShowCoordinates)
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point((x + 1) * 20 + 40, y * 20 + 40);
+            //        }
+            //        else
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point((x + 1) * 20, y * 20);
+            //        }
+            //        MapCreate.Hero.X = x + 1;
+            //        MapCreate.Hero.Y = y;
+            //        MapCreate.ArrMap[x + 1, y] = MapCreate.Hero;
+            //        break;
+            //    case Character.Movement.Left:
+            //        //if (MapCreate.Hero.Vision[(int)Hero.Movement.Left].GetType() != typeof(EmptyTile)) break;
+            //        if (MapCreate.ArrMap[x - 1, y] is Item)
+            //        {
+            //            Item item = (Item)MapCreate.ArrMap[x - 1, y];
+            //            MapCreate.Hero.Pickup((Item)MapCreate.ArrMap[x - 1, y]);
+            //            MapCreate.DeleteItemFromItemArray(item);
+            //        }
+            //        if (Program.ShowCoordinates)
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point((x - 1) * 20 + 40, y * 20 + 40);
+            //        }
+            //        else
+            //        {
+            //            MapCreate.Hero.Button.Location = new System.Drawing.Point((x - 1) * 20, y * 20);
+            //        }
+            //        MapCreate.Hero.X = x - 1;
+            //        MapCreate.Hero.Y = y;
+            //        MapCreate.ArrMap[x - 1, y] = MapCreate.Hero;
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            //MapCreate.UpdateVision();
+            //MapCreate.MoveEnemies();
+            //MapCreate.MoveLeader();
+            //EnemiesAttack();
+            //MapCreate.UpdateVision();
+            ////MageAttacks();
+            //MapCreate.UpdateVision();
+
+            //Program.MainForm.ButtonWeapon1.Enabled = GameShop.CanBuy(0);
+            //Program.MainForm.ButtonWeapon2.Enabled = GameShop.CanBuy(1);
+            //Program.MainForm.ButtonWeapon3.Enabled = GameShop.CanBuy(2);
+
+            //Program.MainForm.Refresh();
 
             return false;
         }
 
-        private void MageAttacks()
+        internal void MoveEnemies()
         {
             foreach (Enemy enemy in MapCreate.ArrEnemy)
             {
-                if (enemy.GetType() == typeof(Mage))
+                Character.Movement movement = enemy.ReturnMove();
+                enemy.Move(movement);
+            }
+
+            Character.Movement mvmt = MapCreate.Leader.ReturnMove();
+            MapCreate.Leader.Move(mvmt);
+        }
+
+        public void EnemiesAttack()
+        {
+            foreach (Enemy enemy in MapCreate.ArrEnemy)
+            {
+                if (enemy.CheckRange(MapCreate.Hero))
                 {
-                    MageAttack(enemy);
+                    enemy.Attack(MapCreate.Hero);
                 }
             }
-        }
 
-        private void MageAttack(Enemy mage)
-        {
-            foreach (Enemy goblin in MapCreate.ArrEnemy)
+            if (MapCreate.Leader.CheckRange(MapCreate.Hero))
             {
-                if (goblin.GetType() == typeof(Goblin))
-                {
-                    if (mage.CheckRange(goblin))
-                    {
-                        // Attacks goblin, return true if goblin died
-                        if (mage.Attack(goblin, mainForm))
-                        {
-                            MapCreate.ArrMap[goblin.X, goblin.Y] = new EmptyTile(goblin.X, goblin.Y);
-                            DeleteEnemyFromEnemyArray(goblin);
-                            mainForm.DeleteTile(goblin);
-                        }
-                    }
-                }
-            }
-        }
-
-        public void Attack(Enemy enemy)
-        {
-            mainForm.Output("Hero attacks " + enemy.GetType().Name + " [" + enemy.X + "," + enemy.Y + "]");
-
-            enemy.Hp -= MapCreate.Hero.Damage;
-
-            mainForm.Output("Enemy: " + enemy.Hp + "/" + enemy.MaxHp + " [" + enemy.X + "," + enemy.Y + "]");
-
-            if (enemy.Hp < 1)
-            {
-                mainForm.Output(enemy.GetType().Name + " has died");
-                MapCreate.ArrMap[enemy.X, enemy.Y] = new EmptyTile(enemy.X, enemy.Y);
-                DeleteEnemyFromEnemyArray(enemy);
-                mainForm.DeleteTile(enemy);
-                //frmMain.
-            }
-        }
-
-        internal void AttackBack(Enemy enemy)
-        {
-            mainForm.Output(enemy.GetType().Name + " attacks Hero");
-            MapCreate.Hero.Hp -= enemy.Damage;
-            //Hero h = MapCreate.Hero;
-            //mainForm.Output("Hero: " + h.Hp + "/" + h.MaxHp + " [" + h.X + "," + h.Y + "]");
-            mainForm.Output(MapCreate.Hero.ToString());
-
-            if (MapCreate.Hero.Hp < 1)
-            {
-                mainForm.Output("Your hero has died");
-                mainForm.ShowEndGame();
+                MapCreate.Leader.Attack(MapCreate.Hero);
             }
         }
     }

@@ -37,6 +37,13 @@
             this.btnShowEnemyStats = new System.Windows.Forms.Button();
             this.btnLoadGame = new System.Windows.Forms.Button();
             this.btnSaveGame = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnWeapon3 = new System.Windows.Forms.Button();
+            this.btnWeapon2 = new System.Windows.Forms.Button();
+            this.btnWeapon1 = new System.Windows.Forms.Button();
+            this.btnShop = new System.Windows.Forms.Button();
+            this.btnShowMapElements = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnUp
@@ -87,14 +94,14 @@
             this.txtOuput.Multiline = true;
             this.txtOuput.Name = "txtOuput";
             this.txtOuput.ReadOnly = true;
-            this.txtOuput.Size = new System.Drawing.Size(247, 492);
+            this.txtOuput.Size = new System.Drawing.Size(247, 503);
             this.txtOuput.TabIndex = 4;
             // 
             // btnShowHeroStats
             // 
-            this.btnShowHeroStats.Location = new System.Drawing.Point(883, 508);
+            this.btnShowHeroStats.Location = new System.Drawing.Point(883, 522);
             this.btnShowHeroStats.Name = "btnShowHeroStats";
-            this.btnShowHeroStats.Size = new System.Drawing.Size(102, 23);
+            this.btnShowHeroStats.Size = new System.Drawing.Size(72, 23);
             this.btnShowHeroStats.TabIndex = 5;
             this.btnShowHeroStats.Text = "Show Hero Stats";
             this.btnShowHeroStats.UseVisualStyleBackColor = true;
@@ -102,11 +109,11 @@
             // 
             // btnShowEnemyStats
             // 
-            this.btnShowEnemyStats.Location = new System.Drawing.Point(1021, 508);
+            this.btnShowEnemyStats.Location = new System.Drawing.Point(1041, 522);
             this.btnShowEnemyStats.Name = "btnShowEnemyStats";
-            this.btnShowEnemyStats.Size = new System.Drawing.Size(109, 23);
+            this.btnShowEnemyStats.Size = new System.Drawing.Size(89, 23);
             this.btnShowEnemyStats.TabIndex = 6;
-            this.btnShowEnemyStats.Text = "Show Enemy Stats";
+            this.btnShowEnemyStats.Text = "Show Enemies";
             this.btnShowEnemyStats.UseVisualStyleBackColor = true;
             this.btnShowEnemyStats.Click += new System.EventHandler(this.btnShowEnemyStats_Click);
             // 
@@ -130,11 +137,77 @@
             this.btnSaveGame.UseVisualStyleBackColor = true;
             this.btnSaveGame.Click += new System.EventHandler(this.btnSaveGame_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnWeapon3);
+            this.groupBox1.Controls.Add(this.btnWeapon2);
+            this.groupBox1.Controls.Add(this.btnWeapon1);
+            this.groupBox1.Location = new System.Drawing.Point(329, 592);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(429, 81);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Shop";
+            // 
+            // btnWeapon3
+            // 
+            this.btnWeapon3.Location = new System.Drawing.Point(300, 26);
+            this.btnWeapon3.Name = "btnWeapon3";
+            this.btnWeapon3.Size = new System.Drawing.Size(108, 42);
+            this.btnWeapon3.TabIndex = 2;
+            this.btnWeapon3.Text = "Buy Item 3";
+            this.btnWeapon3.UseVisualStyleBackColor = true;
+            this.btnWeapon3.Click += new System.EventHandler(this.btnWeapon3_Click);
+            // 
+            // btnWeapon2
+            // 
+            this.btnWeapon2.Location = new System.Drawing.Point(164, 26);
+            this.btnWeapon2.Name = "btnWeapon2";
+            this.btnWeapon2.Size = new System.Drawing.Size(105, 42);
+            this.btnWeapon2.TabIndex = 1;
+            this.btnWeapon2.Text = "Buy Item 2";
+            this.btnWeapon2.UseVisualStyleBackColor = true;
+            this.btnWeapon2.Click += new System.EventHandler(this.btnWeapon2_Click);
+            // 
+            // btnWeapon1
+            // 
+            this.btnWeapon1.Location = new System.Drawing.Point(21, 27);
+            this.btnWeapon1.Name = "btnWeapon1";
+            this.btnWeapon1.Size = new System.Drawing.Size(101, 40);
+            this.btnWeapon1.TabIndex = 0;
+            this.btnWeapon1.Text = "Buy Item 1";
+            this.btnWeapon1.UseVisualStyleBackColor = true;
+            this.btnWeapon1.Click += new System.EventHandler(this.btnWeapon1_Click);
+            // 
+            // btnShop
+            // 
+            this.btnShop.Location = new System.Drawing.Point(961, 522);
+            this.btnShop.Name = "btnShop";
+            this.btnShop.Size = new System.Drawing.Size(72, 23);
+            this.btnShop.TabIndex = 10;
+            this.btnShop.Text = "Show Shop";
+            this.btnShop.UseVisualStyleBackColor = true;
+            this.btnShop.Click += new System.EventHandler(this.btnShop_Click);
+            // 
+            // btnShowMapElements
+            // 
+            this.btnShowMapElements.Location = new System.Drawing.Point(175, 636);
+            this.btnShowMapElements.Name = "btnShowMapElements";
+            this.btnShowMapElements.Size = new System.Drawing.Size(87, 23);
+            this.btnShowMapElements.TabIndex = 11;
+            this.btnShowMapElements.Text = "Map Elements";
+            this.btnShowMapElements.UseVisualStyleBackColor = true;
+            this.btnShowMapElements.Visible = false;
+            this.btnShowMapElements.Click += new System.EventHandler(this.btnShowMapElements_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1142, 674);
+            this.Controls.Add(this.btnShowMapElements);
+            this.Controls.Add(this.btnShop);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSaveGame);
             this.Controls.Add(this.btnLoadGame);
             this.Controls.Add(this.btnShowEnemyStats);
@@ -146,6 +219,8 @@
             this.Controls.Add(this.btnUp);
             this.Name = "frmMain";
             this.Text = "GADE5112POE";
+            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +237,12 @@
         private System.Windows.Forms.Button btnShowEnemyStats;
         private System.Windows.Forms.Button btnLoadGame;
         private System.Windows.Forms.Button btnSaveGame;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnWeapon3;
+        private System.Windows.Forms.Button btnWeapon2;
+        private System.Windows.Forms.Button btnWeapon1;
+        private System.Windows.Forms.Button btnShop;
+        private System.Windows.Forms.Button btnShowMapElements;
     }
 }
 

@@ -4,17 +4,16 @@ namespace GADE5112POE
 {
     class Goblin : Enemy
     {
-        private int purse;
-
-        public int Purse { get => purse; set => purse = value; }
-
-        public Goblin(int x, int y, int arrayIndex) : base(10, 1, x, y, 'G', arrayIndex) { }
+        public Goblin(int x, int y, int arrayIndex) : base(10, 1, x, y, 'G', arrayIndex)
+        {
+            purse = 1;
+        }
 
         private Random random = new Random();
 
         public Movement GetRandomMovement()
         {
-            int i = random.Next(1, 4);
+            int i = random.Next(1, 5);
             return (Movement)i;
         }
 
@@ -26,8 +25,9 @@ namespace GADE5112POE
             while (!movementIsValid)
             {
                 movement = GetRandomMovement();
-                Type targetType = Vision[(int)movement].GetType();
-                if (targetType!=typeof(Obstacle)) // && targetType!=typeof(Hero) )
+                Tile target = Vision[(int)movement];
+                Type targetType = target.GetType();
+                if (targetType==typeof(EmptyTile) || target is Item) // && targetType!=typeof(Hero) )
                 {
                     movementIsValid = true;
                 }
@@ -36,12 +36,18 @@ namespace GADE5112POE
             return movement;
         }
 
-        public override void Pickup(Item item, frmMain mainForm)
+        public override void Pickup(Item item)
         {
             if (item.GetType() == typeof(Gold))
             {
                 Purse += item.Quantity;
-                mainForm.Output("Goblin picked up " + item.Quantity + "gold");
+                Program.MainForm.Output("Goblin picked up " + item.Quantity + " gold, it now has: " + purse);
+                Program.MainForm.Controls.Remove(item.Button);
+            }
+            else if (item.GetType().BaseType == typeof(Weapon))
+            {
+                weapon = (Weapon)item;
+                Program.MainForm.Output("Goblin has acquired a: " + item.ToString());
             }
         }
 

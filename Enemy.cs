@@ -18,19 +18,5 @@ namespace GADE5112POE
             return GetType().Name + " at [" + X + "," + Y + "]  HP: " + Hp + "/" + maxHp + " (" + damage + " DMG)";
         }
 
-        internal bool Attack(Enemy goblin, frmMain formMain)
-        {
-            formMain.Output("Mage attacks goblin");
-            goblin.Hp -= this.damage;
-            formMain.Output(goblin.ToString());
-
-            if (goblin.Hp < 1)
-            {
-                formMain.Output("Goblin has died");
-                return true;
-            }
-
-            return false;
-        }
     }
 }

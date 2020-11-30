@@ -32,21 +32,23 @@ namespace GADE5112POE
             }
         }
 
-        public RangedWeapon(int x, int y, char symbol, int arrayIndex, RangedWeaponTypes rangedWeaponType) : base(x, y, symbol, arrayIndex)
+        public RangedWeapon(int x, int y, int arrayIndex, RangedWeaponTypes rangedWeaponType) : base(x, y, arrayIndex)
         {
             switch (rangedWeaponType)
             {
                 case RangedWeaponTypes.LongBow:
-                    Durability = 4;
-                    Range = 2;
+                    base.Durability = 4;
+                    base.Range = 2;
                     Damage = 4;
                     Cost = 6;
+                    symbol = 'b';
                     break;
                 case RangedWeaponTypes.Rifle:
                     Durability = 3;
                     Range = 3;
                     Damage = 5;
                     Cost = 7;
+                    symbol = 'r';
                     break;
             }
         }
@@ -56,10 +58,10 @@ namespace GADE5112POE
             switch (rangedWeaponType)
             {
                 case RangedWeaponTypes.LongBow:
-                    return "Longbow";
+                    return "Longbow"; // + base.ToString();
                     break;
                 case RangedWeaponTypes.Rifle:
-                    return "Rifle";
+                    return "Rifle"; // + base.ToString();
                     break;
                 default:
                     return null;

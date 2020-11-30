@@ -4,11 +4,7 @@ namespace GADE5112POE
 {
     public class Hero : Character
     {
-        private int purse;
-
-        public int Purse { get => purse; set => purse = value; }
-
-        public Hero(int x, int y, int hp) : base(hp, 2, 10, x, y, 'H') { }
+        public Hero(int x, int y, int hp) : base(hp, 2, 100, x, y, 'H') { }
 
         public override Movement ReturnMove(Movement move = Movement.Idle)
         {
@@ -16,7 +12,7 @@ namespace GADE5112POE
 
             Type visionType = Vision[(int)move].GetType();
 
-            if (visionType==typeof(EmptyTile) || visionType.BaseType==typeof(Item))
+            if (visionType==typeof(EmptyTile) || visionType.BaseType==typeof(Item) || visionType.BaseType==typeof(Weapon))
             {
                 return move;
             } else
@@ -25,13 +21,17 @@ namespace GADE5112POE
             }
         }
 
-        public override void Pickup(Item item, frmMain mainForm)
+        public override void Pickup(Item item)
         {
             if (item.GetType()==typeof(Gold))
             {
                 Purse += item.Quantity;
-                mainForm.Output("Hero picked up " + item.Quantity + " gold");
-                mainForm.Controls.Remove(item.Button);
+                Program.MainForm.Output("Hero picked up " + item.Quantity + " gold");
+                Program.MainForm.Controls.Remove(item.Button);
+            } else if (item.GetType().BaseType==typeof(Weapon))
+            {
+                weapon = (Weapon)item;
+                Program.MainForm.Output("Hero has acquired a: " + item.ToString());
             }
         }
 

@@ -16,6 +16,11 @@
         public int Cost { get => cost; set => cost = value; }
         public WeaponTypeEnum WeaponType { get => weaponType; set => weaponType = value; } // NB: Replace with enum
 
-        public Weapon(int x, int y, char symbol, int arrayIndex) : base(x, y, symbol, arrayIndex) { }
+        public Weapon(int x, int y, int arrayIndex) : base(x, y, '.', arrayIndex) { }
+
+        public override string ToString()
+        {
+            return "Damage: " + damage + " Range: " + range + " Durability: " + durability + " Cost: " + cost;
+        }
     }
 }

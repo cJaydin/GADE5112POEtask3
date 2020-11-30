@@ -10,12 +10,11 @@
         {
             this.hp = 5;
             this.damage = 5;
+            purse = 3;
+            Weapon = new MeleeWeapon(-1, -1, -1, MeleeWeapon.Types.Dagger);
         }
 
-        public override void Pickup(Item item, frmMain mainForm)
-        {
-            
-        }
+        public override void Pickup(Item item) { }
 
         public override Movement ReturnMove(Movement move = 0)
         {
